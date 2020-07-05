@@ -1,8 +1,6 @@
 <template>
-    <div class="mt-10">
-      <v-app-bar
-        color="deep-purple accent-4"
-      >
+    <div>
+      <v-app-bar>
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
         <v-btn icon>
           <v-icon>mdi-home</v-icon>

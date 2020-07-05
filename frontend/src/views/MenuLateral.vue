@@ -1,12 +1,8 @@
 <template>
-    <div>
+    <div class="mt-1">
       <v-navigation-drawer
         v-model="drawer"
-        color="red"
-        expand-on-hover="true"
-        mini-variant="miniVariant"
-        permanent="permanent"
-        src="bg"
+        expand-on-hover
       >
         <v-list
           dense

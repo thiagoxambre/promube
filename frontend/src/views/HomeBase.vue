@@ -2,7 +2,7 @@
   <div>
     <TopBar>
     </TopBar>
-    <div class="mt-10">
+    <div>
       <MenuLateral>
       </MenuLateral>
     </div>
