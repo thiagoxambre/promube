@@ -5,7 +5,3 @@
     </div>
   </v-app>
 </template>
-
-<style lang="sass">
-  @import './sass/main.sass'
-</style>
