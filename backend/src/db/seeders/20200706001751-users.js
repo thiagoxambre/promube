@@ -1,36 +1,21 @@
 'use strict';
 const { v4: uuidv4 } = require('uuid');
-const md5 = require('md5');
-
+const bcrypt = require('bcrypt');
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-   return queryInterface.bulkInsert('User', [
-     {
-       id: uuidv4(),
-       username: 'admin',
-       password:  md5('admin'),
-       name: 'Usuário ADMIN',
-     }
-   ])
-  },
+  up: (queryInterface, Sequelize) => {
 
-  down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-    queryInterface.bulkDelete('User', null , {});
+    return queryInterface.bulkInsert('User', [
+      {
+        id: uuidv4(),
+        username: 'admin',
+        password:  bcrypt.hashSync('admin' , 10),
+        name: 'Usuário ADMIN',
+      }
+    ]);
+  }, 
+
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('User', null , {});
   }
 };

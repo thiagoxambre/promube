@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize,DataTypes) => {
     const User = sequelize.define('User', {
         id: {
@@ -13,6 +15,9 @@ module.exports = (sequelize,DataTypes) => {
         password: {
             type: DataTypes.TEXT,
             allowNull: false,
+            set(value) {
+                this.setDataValue('password', bcrypt.hashSync(value,10));
+            }
         },
         name: {
             type: DataTypes.TEXT,
