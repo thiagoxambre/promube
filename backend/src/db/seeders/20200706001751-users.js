@@ -11,6 +11,8 @@ module.exports = {
         username: 'admin',
         password:  bcrypt.hashSync('admin' , 10),
         name: 'Usuário ADMIN',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }
     ]);
   }, 

@@ -26,6 +26,14 @@ module.exports = {
       name: {
           type: Sequelize.DataTypes.TEXT,
           allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
       }
     });
     return UserTable;

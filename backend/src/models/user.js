@@ -1,3 +1,5 @@
+'use strict';
+
 const bcrypt = require('bcrypt');
 
 module.exports = (sequelize,DataTypes) => {
@@ -23,8 +25,17 @@ module.exports = (sequelize,DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false,
         }
+    }, {     
+        freezeTableName: true,
     })
     
+    User.isValidPassword = function(user, password) {
+        console.info(password);
+        console.info(user.password);
+        const compare = bcrypt.compareSync(password , user.password);
+        return compare;
+    }
+
     return User;
 }
 
