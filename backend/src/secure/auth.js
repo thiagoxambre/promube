@@ -11,6 +11,7 @@ passport.use('login', new LocalStrategy({
   }, async (username, password, done) => {
     try {
       //Find the user associated with the email provided by the user
+      console.info('chegou aqui');
       const user = await UserModel.findOne({
         where: {username: username}
       });

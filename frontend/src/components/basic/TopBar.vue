@@ -1,9 +1,7 @@
 <template>
     <div>
       <v-app-bar class="teal darken-1" dark>
-        <v-img max-width="180px" src="http://www2.maringa.pr.gov.br/site/images-2017/brasao-prefeitura-horizontal.svg"></v-img>
-
-        <v-toolbar-title class="ml-4">Promube</v-toolbar-title>
+        <v-toolbar-title class="ml-4">PROMUBE</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
