@@ -3,40 +3,44 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Faculdades', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.DataTypes.UUID,
+        defaultValue: Sequelize.DataTypes.UUIDV4,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       razaoSocial: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
       nomeFantasia: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
       cnpj: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+        unique: true,
       },
       logradouro: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
       numero: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
-      complemento: {
-        type: Sequelize.STRING
-      },
-      bairro: {
-        type: Sequelize.STRING
-      },
+      complemento: Sequelize.DataTypes.STRING,
+      bairro: Sequelize.DataTypes.STRING,
       cep: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
       cidade: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
       uf: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

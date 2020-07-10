@@ -14,16 +14,46 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Faculdade.init({
-    razaoSocial: DataTypes.STRING,
-    nomeFantasia: DataTypes.STRING,
-    cnpj: DataTypes.STRING,
-    logradouro: DataTypes.STRING,
-    numero: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    razaoSocial: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    nomeFantasia: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    cnpj: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    logradouro: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    numero: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     complemento: DataTypes.STRING,
     bairro: DataTypes.STRING,
-    cep: DataTypes.STRING,
-    cidade: DataTypes.STRING,
-    uf: DataTypes.STRING
+    cep: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    cidade: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    uf: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Faculdade',
