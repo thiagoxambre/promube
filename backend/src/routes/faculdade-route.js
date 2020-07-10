@@ -5,5 +5,8 @@ const router = express.Router();
 const prefixoRoute = '/faculdade';
 
 router.post(`${prefixoRoute}`, faculdadeController.cadastrar);
+router.put(`${prefixoRoute}`, faculdadeController.atualizar);
+router.get(`${prefixoRoute}`, faculdadeController.listaTodos);
+router.get(`${prefixoRoute}/:id`, faculdadeController.getPorId);
 
 module.exports = router;

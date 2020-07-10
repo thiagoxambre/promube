@@ -2,11 +2,13 @@ const faculdadeRepository = require('../repositories/faculdade-repository');
 const faculdadeConstant = require('../constants/faculdade-constants');
 const models = require('../models');
 const faculdadeConstants = require('../constants/faculdade-constants');
+const { isUuid } = require('uuidv4');
 
 module.exports.cadastrar = async (faculdade) => {
     const faculdadeDB = await faculdadeRepository.getFaculdadePorCNPJ(faculdade.cnpj);
+    console.info(faculdadeDB);
     if (faculdadeDB) {
-        throw new Error (faculdadeConstant.alreadyExists);
+        throw new Error (faculdadeConstant.alreadyExists,200);
     }
     const transaction = await models.sequelize.transaction();
     try {
@@ -21,14 +23,43 @@ module.exports.cadastrar = async (faculdade) => {
 };
 
 module.exports.atualizarPorId = async (faculdade) => {
-    if (!faculdadeRepository.getFaculdadePorId(faculdade.id)) {
+    if (!faculdade.id) {
+        throw new Error (faculdadeConstants.notFound);
+    }
+    const faculdadeBD = await faculdadeRepository.getFaculdadePorId(faculdade.id);
+    if (!faculdadeBD) {
         throw new Error (faculdadeConstants.notFound);
     }
     const transaction = await models.sequelize.transaction();
     try {
         await faculdadeRepository.atualizarPorId(faculdade,transaction);
         await transaction.commit();
+        return faculdadeConstant.updateSuccess;
     } catch (err) {
         await transaction.rollback();
+        throw err;
     }
 } 
+
+module.exports.listaTodos = async () => {
+    try {
+        return await faculdadeRepository.findAll();
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports.getPorId = async (id) => {
+    try {
+        if (!isUuid(id)) {
+            throw new Error (faculdadeConstants.notFound);
+        }
+        const faculdade = await faculdadeRepository.getFaculdadePorId(id);
+        if (!faculdade) {
+            throw new Error (faculdadeConstants.notFound);
+        }
+        return faculdade;
+    } catch (err) {
+        throw err;
+    }
+}

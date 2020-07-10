@@ -41,9 +41,9 @@ app.use('/protected', passport.authenticate('jwt', { session : false }) , protec
 router(app);
 
 //Handle errors
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({ error : err });
+
+app.use((err, req, res, next) => {
+  return res.status(err.status || 500).json({error: err.message});
 });
 
 module.exports = app;

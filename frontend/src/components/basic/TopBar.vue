@@ -1,6 +1,6 @@
 <template>
     <div>
-      <v-app-bar class="teal darken-1" dark>
+      <v-app-bar class="light-blue darken-3" dark>
         <v-toolbar-title class="ml-4">PROMUBE</v-toolbar-title>
 
         <v-spacer></v-spacer>

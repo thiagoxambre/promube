@@ -3,7 +3,7 @@
       <v-navigation-drawer
         v-model="drawer"
         expand-on-hover
-        class="teal lighten-5"
+        class="blue-grey lighten-5"
       >
         <v-list
           dense
