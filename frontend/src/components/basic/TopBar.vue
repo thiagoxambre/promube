@@ -1,6 +1,7 @@
 <template>
     <div>
-      <v-app-bar class="light-blue darken-3" dark>
+      <v-app-bar class="light-blue darken-3" app clipped-left dark>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title class="ml-4">PROMUBE</v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -34,6 +35,9 @@
 </template>
 <script>
 export default {
-  name: 'TopBar'
+  name: 'TopBar',
+  data: () => ({
+    drawer: null
+  })
 }
 </script>

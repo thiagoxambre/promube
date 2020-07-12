@@ -3,19 +3,22 @@
     <BasePage>
     </BasePage>
     <v-main>
+      <FaculdadeConsulta/>
     </v-main>
   </div>
 </template>
 <script>
 import BasePage from '../components/basic/BasePage'
+import FaculdadeConsulta from '../components/faculdade/FaculdadeConsulta'
 
 export default {
-  name: 'Home',
+  name: 'FaculdadeList',
   data: () => ({
     drawer: null
   }),
   components: {
-    BasePage
+    BasePage,
+    FaculdadeConsulta
   }
 }
 </script>
