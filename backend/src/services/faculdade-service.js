@@ -10,11 +10,12 @@ module.exports.cadastrar = async (faculdade) => {
     if (faculdadeDB) {
         throw new Error (faculdadeConstant.alreadyExists,200);
     }
+    delete faculdade.id;
     const transaction = await models.sequelize.transaction();
     try {
         const novaFaculdade = await faculdadeRepository.cadastrar(faculdade,transaction);
         await transaction.commit();
-        return novaFaculdade;
+        return faculdadeConstant.createSuccess;
     } catch (err) {
         await transaction.rollback();
         throw err;
@@ -39,7 +40,24 @@ module.exports.atualizarPorId = async (faculdade) => {
         await transaction.rollback();
         throw err;
     }
-} 
+}
+
+module.exports.deletarPorId = async (id) => {
+    const faculdadeBD = await faculdadeRepository.getFaculdadePorId(id);
+    if (!faculdadeBD) {
+        throw new Error (faculdadeConstants.notFound);
+    }
+    const transaction = await models.sequelize.transaction();
+    try {
+        await faculdadeRepository.deletarPorId(id,transaction);
+        await transaction.commit();
+        return faculdadeConstant.deleteSuccess;
+    } catch (err) {
+        await transaction.rollback();
+        throw err;
+    }
+
+}
 
 module.exports.listaTodos = async () => {
     try {
