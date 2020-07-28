@@ -3,7 +3,7 @@
 <v-data-table
   :headers="headers"
     :items="faculdades"
-    class="ma-5 elevation-3"
+    class="ma-1 elevation-3"
   >
     <template v-slot:top>
       <v-toolbar flat color="white">

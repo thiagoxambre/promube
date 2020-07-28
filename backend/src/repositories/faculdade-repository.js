@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 const models = require('../models');
 
 module.exports.cadastrar = async (faculdade,transaction) => await models.Faculdade.create(faculdade, { transaction });
