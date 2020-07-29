@@ -26,6 +26,6 @@ module.exports = {
     return CidadeTable;
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Cidades');
+    await queryInterface.dropTable('Cidade');
   }
 };

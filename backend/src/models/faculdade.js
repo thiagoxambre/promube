@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Faculdade.belongsTo(models.Cidade, { foreignKey: 'cidadeId' });
+      Faculdade.belongsTo(models.Bairro, { foreignKey: 'bairroId' });
     }
   };
   Faculdade.init({
@@ -56,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     complemento: DataTypes.STRING,
-    bairro: DataTypes.STRING,
+    bairroId: DataTypes.UUID,
     cep: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -64,22 +66,13 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    cidade: {
-      type: DataTypes.STRING,
+    cidadeId: {
+      type: DataTypes.UUID,
       allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    uf: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
     },
   }, {
     sequelize,
+    freezeTableName: true,
     modelName: 'Faculdade',
   });
   return Faculdade;

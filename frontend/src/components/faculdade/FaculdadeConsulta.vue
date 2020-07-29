@@ -55,13 +55,33 @@
                     <v-text-field v-model="editedItem.complemento" label="Complemento"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
-                    <v-text-field v-model="editedItem.bairro" label="Bairro" :rules="rules.obrigatorio"></v-text-field>
+                    <v-autocomplete
+                      :value="editedItem.cidadeId"
+                      :rules="rules.obrigatorio"
+                      label="Cidade"
+                      :items="cidades.itens"
+                      @update:search-input="consultarCidades"
+                      item-text="nome"
+                      item-value="id"
+                      :loading="cidades.loading"
+                      no-data-text="Cidade não encontrado"
+                      @input="atualizaCidadeId"
+                    />
                   </v-col>
-                  <v-col cols="12" sm="9" md="9">
-                    <v-text-field v-model="editedItem.cidade" label="Cidade" :rules="rules.obrigatorio"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3" md="3">
-                    <v-text-field v-model="editedItem.uf" label="Estado" :rules="rules.obrigatorio"></v-text-field>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-autocomplete
+                      :value="editedItem.bairroId"
+                      :rules="rules.obrigatorio"
+                      label="Bairro"
+                      :items="bairros.itens"
+                      @update:search-input="consultarBairros"
+                      @focus="consultarBairros(null)"
+                      item-text="nome"
+                      item-value="id"
+                      :loading="cidades.loading"
+                      no-data-text="Bairro não encontrado"
+                      @input="atualizaBairroId"
+                    />
                   </v-col>
                 </v-row>
               </v-container>
@@ -104,6 +124,8 @@
 </template>
 <script>
 import FaculdadeService from '@/services/FaculdadeService'
+import CidadeService from '@/services/CidadeService'
+import BairroService from '@/services/BairroService'
 import FaculdadeConsulta from '@/entities/FaculdadeConsulta'
 import { mask } from 'vue-the-mask'
 export default {
@@ -117,6 +139,18 @@ export default {
     mensagemErro: null,
     showSuccess: false,
     mensagemSucesso: null,
+    buscaCidade: null,
+    // consultarCidades: null,
+    cidades: {
+      itens: [],
+      loading: false
+    },
+    buscaBairro: null,
+    // consultarBairros: null,
+    bairros: {
+      itens: [],
+      loading: false
+    },
     headers: [
       { text: 'Faculdade', value: 'nomeFantasia' },
       { text: 'Razão Social', value: 'razaoSocial' },
@@ -145,10 +179,9 @@ export default {
       logradouro: '',
       numero: '',
       complemento: '',
-      bairro: '',
+      bairroId: '',
       cep: '',
-      cidade: '',
-      uf: ''
+      cidadeId: ''
     },
     defaultItem: {
       nomeFantasia: '',
@@ -157,10 +190,9 @@ export default {
       logradouro: '',
       numero: '',
       complemento: '',
-      bairro: '',
+      bairroId: '',
       cep: '',
-      cidade: '',
-      uf: ''
+      cidadeId: ''
     }
   }),
   computed: {
@@ -172,6 +204,7 @@ export default {
     dialog (val) {
       val || this.close()
     }
+
   },
   created () {
     this.consultarFaculdades()
@@ -191,6 +224,7 @@ export default {
     },
 
     async save () {
+      console.info(this.editedItem)
       const faculdade = new FaculdadeConsulta(this.editedItem)
       if (this.editedIndex > -1) {
         await this.update(faculdade)
@@ -239,6 +273,47 @@ export default {
         this.consultarFaculdades()
       }
     },
+    consultarCidades (buscaCidade = '') {
+      console.info(this.buscaCidade)
+      console.info(buscaCidade)
+      if (this.buscaCidade === '' && !buscaCidade) return
+      if (buscaCidade && this.buscaCidade === buscaCidade) return
+      console.info('consultarCidades')
+      this.cidades.loading = true
+      this.buscaCidade = buscaCidade || ''
+      CidadeService.findAll(this.buscaCidade)
+        .then((data) => {
+          console.info(data)
+          this.cidades.itens = data
+        })
+        .finally(() => { this.cidades.loading = false })
+    },
+
+    consultarBairros (buscaBairro = '') {
+      // if (this.bairros.itens.length > 0) return
+      if (this.buscaBairro === '' && !buscaBairro) return
+      if (buscaBairro && this.buscaBairro === buscaBairro) return
+      if (!this.editedItem.cidadeId) return
+      console.info('consultarBairros')
+      this.bairros.loading = true
+      this.buscaBairro = buscaBairro || ''
+      console.info(this.buscaBairro)
+      BairroService.findAllPorCidade(this.editedItem.cidadeId, this.buscaBairro)
+        .then((data) => {
+          console.info(data)
+          this.bairros.itens = data
+        })
+        .finally(() => { this.bairros.loading = false })
+    },
+
+    atualizaCidadeId (cidadeId) {
+      this.editedItem.cidadeId = cidadeId
+    },
+
+    atualizaBairroId (bairroId) {
+      this.editedItem.bairroId = bairroId
+    },
+
     close () {
       this.dialog = false
       this.$nextTick(() => {

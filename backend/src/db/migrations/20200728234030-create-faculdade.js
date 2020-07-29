@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Faculdades', {
+    await queryInterface.createTable('Faculdade', {
       id: {
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.DataTypes.UUIDV4,
@@ -29,18 +29,29 @@ module.exports = {
         allowNull: false,
       },
       complemento: Sequelize.DataTypes.STRING,
-      bairro: Sequelize.DataTypes.STRING,
+      bairroId: {
+        type: Sequelize.DataTypes.UUID,
+        references: {
+          model: 'Bairro',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
       cep: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
       },
-      cidade: {
-        type: Sequelize.DataTypes.STRING,
+      cidadeId: {
+        type: Sequelize.DataTypes.UUID,
         allowNull: false,
-      },
-      uf: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
+        references: {
+          model: 'Cidade',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+
       },
       createdAt: {
         allowNull: false,
