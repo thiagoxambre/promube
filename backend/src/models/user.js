@@ -24,14 +24,39 @@ module.exports = (sequelize,DataTypes) => {
         name: {
             type: DataTypes.TEXT,
             allowNull: false,
+        },
+        dataNascimento: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+        },
+        role: {
+            type: DataTypes.ENUM('Administrador','Prefeitura','Faculdade','Candidato','Aluno'),
+        },
+        cpf: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            unique: true,
+        },
+        alterarSenha: {
+            type:DataTypes.BOOLEAN
+        },
+        ultimaAlteracaoSenha: {
+            type: DataTypes.DATE,
+        },
+        expiracaoSenha: {
+            type: DataTypes.DATE,
+        },
+        aceiteTermos: {
+            type: DataTypes.BOOLEAN,
+        },
+        dataAceitouTermos: {
+            type: DataTypes.DATE,
         }
     }, {     
         freezeTableName: true,
     })
     
     User.isValidPassword = function(user, password) {
-        console.info(password);
-        console.info(user.password);
         const compare = bcrypt.compareSync(password , user.password);
         return compare;
     }
